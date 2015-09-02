@@ -1,16 +1,20 @@
 Youtube Video Downloader
 
-The application that I am proposing for my final project in this class will be a browser pluging for google chrome and mozilla firefox to download videos off of youtube. There are already a bunch out there but I have never really liked using any of them, plus it would be cool to learn how it works.
+The application that I am proposing for my final project in this class will be a browser pluging for google chrome and mozilla firefox
+to download videos off of youtube. There are already a bunch out there but I have never really liked using any of them, plus it would be
+cool to learn how it works.
 
 The target audience will be the general public.
 
-The data that it will manage will be the video stream that is pulled from the URL, then write the data to a .flv or .mp4 file. I will also need to create a decent parser that will parse any valid youtube URI's and pull from those URI's.
+The data that it will manage will be the video stream that is pulled from the URL, then write the data to a .flv or .mp4 file. I will
+also need to create a decent parser that will parse any valid youtube URI's and pull from those URI's.
 
 The technologies that I will use... Well I have a lot of experience in PHP, so I think I'll try writing this program in Python.
 
 My stretch goals will be:
 
-1) Option to download as mp3 (there is chance of copyright violation, but this is not what the app is intended for, there are lots of non-licensed media files on youtube that have no download options)
+1) Option to download as mp3 (there is chance of copyright violation, but this is not what the app is intended for, there are lots of non
+-licensed media files on youtube that have no download options)
 
 2) A desktop app that provides a convenient interface with what files have been downloaded and creates a library.
 
