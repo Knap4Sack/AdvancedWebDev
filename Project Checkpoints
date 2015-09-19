@@ -2,10 +2,15 @@
 Checkpoints for youtube downloader project.
 **********************************************
 
-1) October 8: Have researched extensively the functionality of the Python language and whether or not I will need to interact with youtube's data v3 api for python to be able to pick up the data stream.
+1) October 8: Have researched extensively the functionality of the Python language and whether or not I will need to
+interact with youtube's data v3 api for python to be able to pick up the data stream.
 
-2) October 22: Have researched extensively how to implement my code, when written, into a chrome extension and firefox plugin.
+2) October 22: Have researched extensively how to implement my code, when written, into a chrome extension and firefox
+plugin.
 
-3) November 12: By this time I plan to have figured out how to pick up the youtube video's data stream via Python and be able to successfully download a video (All backend).
+3) November 12: By this time I plan to have figured out how to pick up the youtube video's data stream via Python and be
+able to successfully download a video (All backend).
 
-4) December 03: This will be the finalized version of the project where the functionality from 3 will be implemented into a google chrome extension and mozilla firefox plugin. The stretch goal to implement only downloading the audio as a setting option will be attempted by this date as well.
+4) December 03: This will be the finalized version of the project where the functionality from 3 will be implemented into
+a google chrome extension and mozilla firefox plugin. The stretch goal to implement only downloading the audio as a
+setting option will be attempted by this date as well.
