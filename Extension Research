@@ -1,0 +1,46 @@
+*************
+Extensions
+*************
+
+The main lesson that I have learned between google and firefox extensions is that writing an extension
+for google chrome is so much smoother and simpler than writing a firefox extension.
+
+************
+Chrome
+************
+
+There are only 2 parts to writing a chrome extension. The manifest contains all of the information of the extension.
+In this manifest the name and description of the app are declared. The browser action field lets me fill in the
+path to the image to be displayed next to the URL bar and the path to the file that will pop up once the image is
+clicked. The manifest is also where any permissions that the app needs from the user is declared.
+
+Plugging the code into this extension is quite easy. The image and popup paths get declared in the manifest. Then
+the popup can has the html markup just like a web page. This is the equivalent of the home page of a website.
+So from this popup html file, the code to execute my app can be linked.
+
+************
+Firefox
+************
+
+The firefox plugin is much more convoluted. First a new profile in firefox has to be made so that the settings
+on your daily firefox use does not get changed. From here we firefox has to be pointed to the directory of the
+extension code. To accomplish this the profile directory needs to be found. When the directory is found there
+should be an extensions folder there, from here the code can either be dropped into the extensions folder or
+a file that points to your extensions folder can be made. The next step is to tackle the kind of intimidating
+install.rdf file.
+
+The install.rdf file is where all of the meta data to the app is contained. This is very similar to chrome's
+manifest file. The description, chome folder url, permissions, etc. are put in this file, but it's all
+really dirty xml.
+
+Next we need to come up with the "chrome.manifest" file. Apparently all of the lacing around the window, the
+tool bar, the URL window, basically all of the parts that make it a browser is called the "chrome". This
+file is linked to the install.rdf file and is where the paths to all of the extension information is found.
+Once all of this has been done we now have a chrome folder inside the extensions folder, now we need some
+xul files (xml user interface language). The first file created overrides the default browser window, this is
+where a picture can be added to the tool bar to activate the extension. An options file can also be created
+to configure the preferences of the plugin. The HTML content window is also placed here along with any
+javascript files. Once all of this is done the plugin gets packaged for installation.
+
+
+I'm super excited to make the chrome part of the app, not so much firefox side.
