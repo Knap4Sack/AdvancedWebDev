@@ -82,6 +82,16 @@ return array(
                     ),
                 ),
             ),
+            'serve' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/serve',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Serve',
+                        'action'     => 'serve',
+                    ),
+                ),
+            ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
@@ -141,6 +151,7 @@ return array(
             'Application\Controller\Contact' => Controller\ContactController::class,
             'Application\Controller\Products' => Controller\ProductsController::class,
             'Application\Controller\Signup' => Controller\SignupController::class,
+            'Application\Controller\Serve' => Controller\ServeController::class,
             'Application\Controller\About' => Controller\AboutController::class
 
         ),
