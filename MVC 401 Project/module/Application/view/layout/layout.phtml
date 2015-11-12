@@ -1,4 +1,8 @@
-<?php echo $this->doctype(); ?>
+<?php echo $this->doctype(); 
+error_reporting(-1); 
+ini_set('display_errors', 1); 
+ini_set('html_errors', 1);
+?>
 
 <html lang="en">
     <head>
@@ -11,10 +15,13 @@
         ?>
 
         <!-- Le styles -->
-        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.png'))
                         ->prependStylesheet($this->basePath('css/style.css'))
                         ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
-                        ->prependStylesheet($this->basePath('css/bootstrap.min.css')) ?>
+                        ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+                        ->prependStylesheet($this->basePath('css/riatsstyles.css'))
+                        ->prependStylesheet($this->basePath('css/modern-business.css'))
+                        ?>
 
         <!-- Scripts -->
         <?php echo $this->headScript()
@@ -36,20 +43,52 @@
                     </button>
                     <a class="navbar-brand" href="<?php echo $this->url('home') ?>">&nbsp;<?php echo $this->translate('Riats Clothing') ?></a>
                 </div>
+
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
+                      <?php 
+                         if($this->url() == $this->url('home')){
+                            echo "<li class = 'active'><a href=" . $this->url('home') . ">" . "Home</a></li>";
+                        }
+                        else{
+                            echo "<li><a href=" . $this->url('home') . ">" . "Home</a></li>";
+                        }  
+                        if($this->url() == $this->url('about')){
+                            echo "<li class = 'active'><a href= " . $this->url('about') . ">" . $this->translate('About') . "</a></li>";
+                        }
+                        else{
+                            echo "<li><a href= " . $this->url('about') . ">" . $this->translate('About') . "</a></li>";
+                        }
+                        if($this->url() == $this->url('contact')){
+                            echo "<li class = 'active'><a href= " . $this->url('contact') . ">" . $this->translate('Contact Us') . "</a></li>";
+                        }
+                        else{
+                            echo "<li><a href= " . $this->url('contact') . ">" . $this->translate('Contact Us') . "</a></li>";
+                        }
+                        if($this->url() == $this->url('products')){
+                            echo "<li class = 'active'><a href= " . $this->url('products') . ">" . $this->translate('Products') . "</a></li>";
+                        }
+                        else{
+                            echo "<li><a href= " . $this->url('products') . ">" . $this->translate('Products') . "</a></li>";
+                        }
+                        if($this->url() == $this->url('signup')){
+                            echo "<li class = 'active'><a href= " . $this->url('signup') . ">" . $this->translate('Sign Up') . "</a></li>";
+                        }
+                        else{
+                            echo "<li><a href= " . $this->url('signup') . ">" . $this->translate('Signup') . "</a></li>";
+                        }
+                        ?>
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
-        <div class="container">
             <?php echo $this->content; ?>
+        <div class="container">
             <hr>
             <footer>
                 <p>&copy; 2014 - <?php echo date('Y') ?> by Riats Clothing LLC <?php echo $this->translate('All rights reserved.') ?></p>
             </footer>
-        </div> <!-- /container -->
+        </div>
         <?php echo $this->inlineScript() ?>
     </body>
 </html>

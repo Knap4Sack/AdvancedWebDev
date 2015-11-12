@@ -1,0 +1,233 @@
+html {
+	  font-family: 'Lato', sans-serif;
+}
+body {
+	  font-family: 'Lato', Helvetica, Arial, sans-serif;
+}
+
+h1 {
+	font-weight: bold;
+}
+
+h2 {
+	font-weight: bold;
+}
+
+.align-footer{
+  max-width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer-img{
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.navbar-image {
+	float: left;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.btn {
+  -webkit-border-radius: 17;
+  -moz-border-radius: 17;
+  border-radius: 17px;
+  font-family: 'Lato', Arial;
+  color: #000000;
+  font-size: 20px;
+  background: #e7e7e7;
+  padding: 10px 20px 10px 20px;
+  margin-right: 10px;
+  margin-left: 10px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #efefef;
+  text-decoration: none;
+}
+
+.submit-button {
+  -webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  border-radius: 10px;
+  font-family: 'Lato', Arial;
+  color: #000000;
+  font-size: 14px;
+  background: #e7e7e7;
+  padding: 7px 14px 7px 14px;
+  margin-top: 10px;
+  text-decoration: none;
+}
+
+.submit-button-block {
+  -webkit-border-radius: 10;
+  -moz-border-radius: 10;
+  border-radius: 10px;
+  font-family: 'Lato', Arial;
+  color: #000000;
+  font-size: 14px;
+  background: #e7e7e7;
+  padding: 7px 14px 7px 14px;
+  margin-top: 10px;
+  display:block;
+  text-decoration: none;
+}
+
+.submit-button:hover {
+  background: #efefef;
+  text-decoration: none;
+}
+
+.submit-button-block:hover {
+  background: #efefef;
+  text-decoration: none;
+}
+
+.login-radio-text {
+  display: inline-block;
+  margin-right: 10px;
+  margin-left: 4px;
+}
+
+.form-control {
+	display: inline-block;
+	width: 50%;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.signup-field-list{
+	list-style-type: none;
+}
+
+.login-field-list{
+  list-style-type: none;
+}
+
+.zip-status {
+	float: right;
+}
+
+.index-glyphs {
+	float: left;
+	margin-right: 10px;
+}
+
+.list-nodots {
+	list-style-type: none;
+}
+
+.list-nodots > li {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.signup-error {
+	color: #DD0000;
+	margin-left: 5px;
+	font-size: small;
+}
+
+ .login-error {
+  color: #DD0000;
+  margin-left: 5px;
+  font-size: small;
+ }
+
+.pass-message {
+	display: block;
+	font-size: small;
+	padding-bottom: -5px;
+	margin-bottom: -5px;
+}
+
+.pass-message-2 {
+	display: block;
+	font-size: small;
+	padding-bottom: -5px;
+	margin-bottom: -5px;
+	padding-top: 5px;
+}
+
+.zip-message {
+	display: block;
+	font-size: small;
+	margin-bottom: -5px;
+	padding-bottom: -5px;
+}
+
+.navbar-inverse {
+  background-color: #e7e7e7;
+  border-color: #d0d0d0;
+}
+.navbar-inverse .navbar-brand {
+  color: #000000;
+}
+.navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
+  color: #000000;
+}
+.navbar-inverse .navbar-text {
+  color: #000000;
+}
+.navbar-inverse .navbar-nav > li > a {
+  color: #000000;
+}
+.navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+  color: #000000;
+}
+.navbar-inverse .navbar-nav > li > .dropdown-menu {
+  background-color: #e7e7e7;
+}
+.navbar-inverse .navbar-nav > li > .dropdown-menu > li > a {
+  color: #000000;
+}
+.navbar-inverse .navbar-nav > li > .dropdown-menu > li > a:hover,
+.navbar-inverse .navbar-nav > li > .dropdown-menu > li > a:focus {
+  color: #000000;
+  background-color: #d0d0d0;
+}
+.navbar-inverse .navbar-nav > li > .dropdown-menu > li > .divider {
+  background-color: #e7e7e7;
+}
+.navbar-inverse .navbar-nav > .active > a, .navbar-inverse .navbar-nav > .active > a:hover, .navbar-inverse .navbar-nav > .active > a:focus {
+  color: #000000;
+  background-color: #d0d0d0;
+}
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+  color: #000000;
+  background-color: #d0d0d0;
+}
+.navbar-inverse .navbar-toggle {
+  border-color: #d0d0d0;
+}
+.navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
+  background-color: #d0d0d0;
+}
+.navbar-inverse .navbar-toggle .icon-bar {
+  background-color: #000000;
+}
+.navbar-inverse .navbar-collapse,
+.navbar-inverse .navbar-form {
+  border-color: #000000;
+}
+.navbar-inverse .navbar-link {
+  color: #000000;
+}
+.navbar-inverse .navbar-link:hover {
+  color: #000000;
+}
+
+@media (max-width: 767px) {
+  .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+    color: #000000;
+  }
+  .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #000000;
+  }
+  .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a, .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-inverse .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #000000;
+    background-color: #d0d0d0;
+  }
+}
