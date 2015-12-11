@@ -1,0 +1,6 @@
+#!/Users/Killshot47/subWorkspace/Youtubular/venv/bin/python
+# EASY-INSTALL-DEV-SCRIPT: 'pytube==6.1.4','pytube'
+__requires__ = 'pytube==6.1.4'
+__import__('pkg_resources').require('pytube==6.1.4')
+__file__ = '/Users/Killshot47/subWorkspace/pytube/pytube/scripts/pytube'
+exec(compile(open(__file__).read(), __file__, 'exec'))

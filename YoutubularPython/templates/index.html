@@ -1,0 +1,20 @@
+<!doctype html>
+<!--
+ This page is shown when the extension button is clicked, because the
+ "browser_action" field in manifest.json contains the "default_popup" key with
+ value "popup.html".
+ -->
+<html>
+  <head>
+    <title>Youtubular</title>
+  </head>
+  <body>
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.11.3.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='download.js') }}"></script>
+    <script>
+    var downloadURI = '{{ success }}';
+    </script>
+  </body>
+</html>
+
+
