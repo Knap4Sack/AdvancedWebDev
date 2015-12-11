@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html id="mozilla-blog" lang="en-US"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- For Facebook -->
+  <meta property="og:site_name" content="Mozilla Add-ons Blog">
+  <meta property="og:title" content="How to develop a Firefox extension">
+  <meta property="og:url" content="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/">
+  <meta property="og:description" content="This blog post is very outdated. If you want a more recent guide to extension development, please read the new How to Develop a Firefox ...">
+                    <meta property="og:image" content="https://blog.mozilla.org/addons/files//data/www/blog.mozilla.org/wp-content/blogs.dir/100/files//2009/01/extension-structure.png">
+        <meta property="og:image" content="https://blog.mozilla.org/addons/wp-content/themes/OneMozilla/img/mozilla-wordmark.png">
+
+
+  <meta name="title" content="How to develop a Firefox extension | Mozilla Add-ons Blog">
+  <meta name="description" content="This blog post is very outdated. If you want a more recent guide to extension development, please read the new How to Develop a Firefox ...">
+
+  <meta name="Rating" content="General">
+  <!--[if IE]>
+  <meta name="MSSmartTagsPreventParsing" content="true">
+  <meta http-equiv="imagetoolbar" content="no">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <script src="https://ffp4g1ylyit3jdyti1hqcvtb-wpengine.netdna-ssl.com/addons/wp-content/themes/OneMozilla/js/html5.js"></script>
+  <![endif]-->
+
+  <link rel="copyright" href="#colophon">
+  <link rel="profile" href="http://gmpg.org/xfn/11">
+  <link rel="shortcut icon" type="image/ico" href="https://ffp4g1ylyit3jdyti1hqcvtb-wpengine.netdna-ssl.com/addons/wp-content/themes/OneMozilla/img/favicon.ico">
+    <link rel="stylesheet" type="text/css" media="screen" href="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/style.css">
+  <link rel="stylesheet" type="text/css" media="all" href="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/tabzilla-min.css">
+  <link rel="stylesheet" type="text/css" media="print" href="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/print.css">
+  <!--[if lte IE 7]><link rel="stylesheet" type="text/css" media="all" href="https://ffp4g1ylyit3jdyti1hqcvtb-wpengine.netdna-ssl.com/addons/wp-content/themes/OneMozilla/css/ie7.css"><![endif]-->
+
+  <link rel="alternate" type="application/rss+xml" title="Mozilla Add-ons Blog RSS Feed" href="https://blog.mozilla.org/addons/feed/">
+  <link rel="pingback" href="https://blog.mozilla.org/addons/xmlrpc.php">
+
+  <title>How to develop a Firefox extension | Mozilla Add-ons Blog</title>
+
+    <link rel="alternate" type="application/rss+xml" title="Mozilla Add-ons Blog » How to develop a Firefox extension Comments Feed" href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/feed/">
+		<script src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/ga.js" async="" type="text/javascript"></script><script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"https:\/\/blog.mozilla.org\/addons\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.3.1"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script type="text/javascript" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/wp-emoji-release.js"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="wp-syntax-css-css" href="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/wp-syntax.css" type="text/css" media="all">
+<link rel="stylesheet" id="sky-css" href="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/sky.css" type="text/css" media="all">
+<script type="text/javascript" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/jquery.js"></script>
+<script type="text/javascript" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/jquery-migrate.js"></script>
+<script type="text/javascript" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/fc-checkcomment.js"></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blog.mozilla.org/addons/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://blog.mozilla.org/addons/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="What’s going on in AMO for 2009?" href="https://blog.mozilla.org/addons/2009/01/27/whats-going-on-in-amo-for-2009/">
+<link rel="next" title="Slides for today’s presentation" href="https://blog.mozilla.org/addons/2009/01/29/slides-for-todays-presentation/">
+<link rel="canonical" href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/">
+<link rel="shortlink" href="https://blog.mozilla.org/addons/?p=271">
+            <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-36116321-4']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+            </script>  <style type="text/css">
+    #masthead { background-image: url(https://ffp4g1ylyit3jdyti1hqcvtb-wpengine.netdna-ssl.com/addons/files/2012/03/addons.png); }
+  </style>
+</head>
+
+<body class="single single-post postid-271 single-format-standard sky"><div id="tabzilla-panel" class="tabzilla-closed" tabindex="-1">  <div id="tabzilla-contents">    <div id="tabzilla-promo">      <div class="snippet" id="tabzilla-promo-gear">        <a href="https://gear.mozilla.org/?ref=OMG_launch&amp;utm_campaign=OMG_launch&amp;utm_source=gear.mozilla.org&amp;utm_medium=referral&amp;utm_content=tabzilla">          <h4>Official Mozilla gear is here</h4>        </a>      </div>    </div>    <div id="tabzilla-nav">      <ul>        <li><h2>Mozilla</h2>          <div>            <ul>              <li><a href="https://www.mozilla.org/mission/?icn=tabz">Mission</a></li>              <li><a href="https://www.mozilla.org/about/?icn=tabz">About</a></li>              <li><a href="https://support.mozilla.org/?icn=tabz">Support</a></li>              <li><a href="https://developer.mozilla.org/?icn=tabz">Developer Network</a></li>            </ul>          </div>        </li>        <li><h2>Products</h2>          <div>            <ul>              <li><a href="https://www.mozilla.org/firefox/products?icn=tabz">Firefox</a></li>              <li><a href="https://www.mozilla.org/thunderbird/?icn=tabz">Thunderbird</a></li>              <li><a href="https://www.mozilla.org/firefox/os/?icn=tabz">Firefox OS</a></li>            </ul>          </div>        </li>        <li><h2>Innovations</h2>          <div>            <ul>              <li><a href="https://webmaker.org/?icn=tabz">Webmaker</a></li>              <li><a href="https://www.mozilla.org/research/?icn=tabz">Research</a></li>            </ul>          </div>        </li>        <li><h2>Get Involved</h2>          <div>            <ul>              <li><a href="https://www.mozilla.org/contribute/?icn=tabz">Volunteer</a></li>              <li><a href="https://careers.mozilla.org/?icn=tabz">Careers</a></li>              <li><a href="https://www.mozilla.org/en-US/about/mozilla-spaces/?icn=tabz">Find us</a></li>              <li><a href="https://donate.mozilla.org/en-US/?presets=100,50,25,15&amp;amount=50&amp;ref=EOYFR2015&amp;utm_campaign=EOYFR2015&amp;utm_source=mozilla.org&amp;utm_medium=referral&amp;utm_content=mozillaorg_tabzillaTXT&amp;currency=usd&amp;icn=tabz" class="donate">Donate</a></li>              <li><a href="https://www.mozilla.org/about/partnerships/?icn=tabz">Partner</a></li>            </ul>          </div>        </li>        <li id="tabzilla-search">          <a href="https://wiki.mozilla.org/Websites/Directory?icn=tabz">Website Directory</a>          <form title="Search Mozilla sites" role="search" action="https://www.google.com/cse">            <input value="002443141534113389537:ysdmevkkknw" name="cx" type="hidden">            <input value="FORID:0" name="cof" type="hidden">            <label for="q">Search</label>            <input placeholder="Search" id="q" name="q" type="search">          </form>        </li>      </ul>    </div>  </div></div>
+<div id="page"><div class="wrap">
+  <nav id="nav-access">
+    <ul>
+      <li><a href="#content-main" tabindex="1">Skip to main content</a></li>
+      <li><a href="#content-sub" tabindex="2">Skip to sidebar</a></li>
+        </ul>
+  </nav>
+
+    <header id="masthead" class="image">
+    <hgroup>
+          <h1 id="site-title"><a href="https://blog.mozilla.org/addons/" rel="home" title="Go to the front page">Mozilla Add-ons Blog</a></h1>
+            </hgroup>
+    <a aria-label="Mozilla links" href="https://www.mozilla.org/" id="tabzilla">Mozilla</a>
+  </header><!-- #masthead -->
+
+  
+  <main id="content">
+
+  <div id="content-main" class="main" role="main">
+
+    
+      <article id="post-271" class="post-271 post type-post status-publish format-standard hentry category-developers category-documentation tag-documentation tag-tutorials show-author show-comments">
+  <header class="entry-header">
+    <h1 class="entry-title">How to develop a Firefox extension</h1>
+
+      <address class="vcard">
+      <cite class="author fn">
+        <a class="url" href="https://blog.mozilla.org/addons/author/rbangomozillacom/" title="See all posts by rbango">
+          rbango <img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/d210d815ca80c3f23f540f82541389e1_002.jpg" srcset="https://secure.gravatar.com/avatar/d210d815ca80c3f23f540f82541389e1?s=48&amp;r=g 2x" class="avatar avatar-24 photo" height="24" width="24">        </a>
+      </cite>
+    </address>
+  
+      <p class="entry-comments"><a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/#comments" title="47 responses">47</a></p>
+  
+      <p class="entry-posted">
+      <time class="published" title="2009-01-28T15:46:49-08:00" datetime="2009-01-28T15:46:49-08:00">
+        <a class="posted-month" href="https://blog.mozilla.org/addons/2009/01/" title="See all posts from January, 2009">
+          Jan        </a>
+        <span class="posted-date">
+          28        </span>
+        <a class="posted-year" href="https://blog.mozilla.org/addons/2009/" title="See all posts from 2009">
+          2009        </a>
+      </time>
+    </p>
+  
+        </header><!-- .entry-header -->
+
+  <div class="entry-content">
+        <p><strong><span style="color: #ff0000;">This blog post is very outdated.</span> If you want a more recent guide to extension development, please read the new <a href="https://blog.mozilla.org/addons/2014/06/05/how-to-develop-firefox-extension/">How to Develop a Firefox Extension</a>.</strong></p>
+<p>&nbsp;</p>
+<p><em>Reposted with permission from <a href="http://www.robertnyman.com/2009/01/24/how-to-develop-a-firefox-extension/">Robert Nyman</a>:</em></p>
+<p>Admit that you have always wanted to know how to develop a Firefox extension but never had the time to learn. <img class="wp-smiley" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/icon_smile.gif" alt=":-)"> Here I will walk you through and at the end of the article we will have created a fully functional Firefox extension!</p>
+<p>&nbsp;</p>
+<h2>Our objective</h2>
+<p>We will create a Firefox extension to find all links in the current web page, highlight those which have a <code>target</code>
+ attribute and alert you how many links it found. The good part is that 
+once you have done this, you have both an understanding of Firefox 
+extension development as well as a blueprint for any extension you would
+ want to develop in the future.</p>
+<p><span id="more-271"></span></p>
+<h2>What you need – setting up the developing environment</h2>
+<p>First, let’s start with setting up your development environment. You 
+need Firefox (duh) and basically whatever code editor you prefer. Then, 
+there are some recommended things to do to prepare Firefox:</p>
+<h3>Create a different development profile</h3>
+<p>The first step is to create a different profile in Firefox, since you
+ will do some settings and changes that you probably don’t want for your
+ regular profile. In my case, I’ve created a new development profile 
+named “dev”. The steps to do this are:</p>
+<h4>Profile manager on Windows</h4>
+<p>Open the Windows Start menu and choose the Run option (on Vista, it might not be there – just press <kbd>Windows key</kbd> + <kbd>R</kbd> in that case). In the run dialog, write <code>firefox -P</code> and press <kbd>enter</kbd>/click OK. Choose Create Profile in the dialog and follow the steps.</p>
+<h4>Profile manager on Mac</h4>
+<p>Open the Terminal (located under /Applications/Utilities) and type in <code>/Applications/Firefox.app/Contents/MacOS/firefox -profilemanager</code>. Choose Create Profile in the dialog and follow the steps.</p>
+<h4>Profile manager on Linux</h4>
+<p>Open a terminal, use <code><span class="lowercase"><acronym title="Compact Disk">CD</acronym></span></code> to navigate to your Firefox directory and then enter <code>./firefox -profilemanager</code>. Choose Create Profile in the dialog and follow the steps.</p>
+<h3>Configuration settings for Firefox</h3>
+<p>Open Firefox through the Profile Manager (process described above, or
+ set the development profile as default during extension development). 
+Then enter <code>about:config</code> in the address bar. It will warn 
+you about changing settings, but it’s ok since what you will do is only 
+minor changes for development. You can filter the existing settings, and
+ if any of the below settings don’t exist, you can just create them.</p>
+<h4>Recommended settings</h4>
+<p>These are good to enable extension errors in the Firefox Error Console (Tools &gt; Error Console), disable XUL caching and such.</p>
+<ul>
+<li><code>javascript.options.showInConsole = true</code></li>
+<li><code>nglayout.debug.disable_xul_cache = true</code></li>
+<li><code>browser.dom.window.dump.enabled = true</code></li>
+</ul>
+<h4>Optional settings</h4>
+<p>These aren’t necessary, but they might help you out. Personally, I don’t use these.</p>
+<ul>
+<li><code>javascript.options.strict = true</code></li>
+<li><code>extensions.logging.enabled = true</code></li>
+</ul>
+<h2>Point your Firefox extensions directory to your extension</h2>
+<p>Instead of constantly preparing and reinstalling your extension, 
+there’s a simple way to add a pointer from your Firefox extensions 
+directory to your code location. To do this, you must first find your 
+profile directory:</p>
+<h3>Find your profile directory</h3>
+<p>The profile directory is where you will find all the settings for your Firefox profiles, including extension information.</p>
+<h4>Find profile directory on Windows</h4>
+<p>In Windows 2000 and XP, open Explorer and go to <code>C:\Documents and Settings\[your user name]\Application Data\Mozilla\Firefox\Profiles</code> and in Vista, go to <code>C:\Users\[your user name]\AppData\Roaming</code>.</p>
+<h4>Find profile directory on Mac</h4>
+<p>Open the Terminal and type in <code><span class="lowercase"><acronym title="Compact Disk">CD</acronym></span> ~/Library/Application\ Support/Firefox/profiles/</code>.
+ There you will find your Firefox profiles, and they will be named with 
+letters and numbers, followed by a dot (.) and then your profile name, 
+e.g. <code>12a3bc4d.dev</code>.</p>
+<h4>Find profile directory on Linux</h4>
+<p>Open a terminal and type in <code><span class="lowercase"><acronym title="Compact Disk">CD</acronym></span> ~/.mozilla/</code>.
+ In that location, you will find all your Firefox profiles, and they 
+will be named with letters and numbers, followed by a dot (.) and then 
+your profile name, e.g. <code>12a3bc4d.dev</code>.</p>
+<h3>Pointing to an extension</h3>
+<p>In your development profile folder, you will find a folder named <code>extensions</code>.
+ In it, you will have code for all your installed extensions. Instead of
+ placing your code there, you can create a pointer file. Do that by 
+creating a file with a unique name for you (this will have to be the 
+same as you chose for your <code>em:id</code> value in your <code>install.rdf</code> file – more on that below).</p>
+<p>In the case of our example, create a file named <code>linktargetfinder@robertnyman.com</code>, without any extension, and in it just point it to where you will have your code, e.g. <code>C:\extensions\</code> (Windows) or <code>~/Sites/linktargetfinder/</code> (Mac).</p>
+<h2>Creating folder structure and files</h2>
+<p>What is needed to have a good base for your extension development, is
+ to create the structure of the extension code. Start by creating this 
+hierarchy:</p>
+<p><img src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/extension-structure.png" alt="A picture of a hierarchy with four folders, named chrome, defaults, locale and skin. The chrome has a child folder named content, the defaults folder has a child named preferences and the locale folders has a child folder named en-US. The root also contains two files, chrome.manifest and install.rdf"></p>
+<h3><span class="lowercase">i</span>nstall.rdf</h3>
+<p>We begin with the intimidating code of <code>install.rdf</code>. This
+ is where you will have all the meta information about your extension, 
+which versions of Firefox it supports and other assorted information. 
+Our <code>install.rdf</code> will look like this:</p>
+<pre class="code"><code>&lt;?xml version="1.0"?&gt;
+
+&lt;<acronym title="Resource Description Framework">RDF</acronym> xmlns="http://www.w3.org/1999/02/22-<acronym title="Resource Description Framework">RDF</acronym>-syntax-ns#"
+     xmlns:em="http://www.mozilla.org/2004/em-<acronym title="Resource Description Framework">rdf</acronym>#"&gt;
+
+	&lt;Description about="urn:mozilla:install-manifest"&gt;
+		&lt;em:id&gt;linktargetfinder@robertnyman.com&lt;/em:id&gt;
+
+		&lt;em:name&gt;Link Target Finder&lt;/em:name&gt;
+		&lt;em:version&gt;1.0&lt;/em:version&gt;
+		&lt;em:type&gt;2&lt;/em:type&gt;
+		&lt;em:creator&gt;Robert Nyman&lt;/em:creator&gt;
+
+		&lt;em:description&gt;Finds links that have a target attribute&lt;/em:description&gt;
+		&lt;em:homepageURL&gt;http://www.robertnyman.com/&lt;/em:homepageURL&gt;
+		&lt;em:optionsURL&gt;chrome://linktargetfinder/content/options.xul&lt;/em:optionsURL&gt;
+
+		&lt;em:targetApplication&gt;
+
+			&lt;Description&gt;
+				&lt;em:id&gt;{ec8030f7-c20a-464f-9b0e-13a3a9e97384}&lt;/em:id&gt;
+				&lt;em:minVersion&gt;2.0&lt;/em:minVersion&gt;
+				&lt;em:maxVersion&gt;3.1b2&lt;/em:maxVersion&gt;
+
+			&lt;/Description&gt;
+		&lt;/em:targetApplication&gt;
+	&lt;/Description&gt;
+&lt;/RDF&gt;</code></pre>
+<p>Scary, right? Well, even if your not used to <acronym title="Resource Description Framework">RDF</acronym>
+ it’s not that bad at all. Like most code, there’s some mandatory 
+information that you will never need to change, and then some of your 
+own to sprinkle in. The interesting parts for us are:</p>
+<h4>In the <code>Description</code> node</h4>
+<dl>
+<dt><code>em:id</code></dt>
+<dd>This is where you add your unique developer id, of your own 
+choosing. Note that this has to be the same as the pointer file you 
+created above.</dd>
+<dt><code>em:name</code></dt>
+<dd>The name of your extension.</dd>
+<dt><code>em:version</code></dt>
+<dd>Current version of your extension.</dd>
+<dt><code>em:type</code></dt>
+<dd>The type declares that is an extension, as opposed to, for instance, a theme.</dd>
+<dt><code>em:creator</code></dt>
+<dd>Well, you!</dd>
+<dt><code>em:description</code></dt>
+<dd>Describes your extension functionality. Will be shown in the Tools &gt; Add-ons window.</dd>
+<dt><code>em:homepageURL</code></dt>
+<dd>The <acronym title="Uniform Resource Locator">URL</acronym> of your extension’s web site.</dd>
+<dt><code>em:optionsURL</code></dt>
+<dd>The <acronym title="Uniform Resource Locator">URL</acronym> to where you will have your file for editing options/preferences.</dd>
+</dl>
+<h4>In the <code>Description/em:targetApplication</code> node</h4>
+<dl>
+<dt><code>em:id</code></dt>
+<dd>This value is the actual id of Firefox. Change this if you want to develop for Thunderbird or something else.</dd>
+<dt><code>em:minVersion</code></dt>
+<dd>The minimum version of Firefox required to run the extension. <a href="https://addons.mozilla.org/en-US/firefox/pages/appversions">Valid Application Versions</a>.</dd>
+<dt><code>em:maxVersion</code></dt>
+<dd>The maximum version of Firefox required to run the extension. <a href="https://addons.mozilla.org/en-US/firefox/pages/appversions">Valid Application Versions</a>.</dd>
+</dl>
+<p>Read about more options in <a href="https://developer.mozilla.org/en/Install_Manifests">Install Manifests</a>.</p>
+<h3><span class="lowercase">c</span>hrome.manifest</h3>
+<p>The chrome of Firefox is everything around the content window. i.e. 
+web browser toolbar, menus, statusbar etc. The next file for our 
+extension, which will probably feel a bit awkward to edit, is the <code>chrome.mainfest</code> file. This one, however, is in conjunction with <code>install.rdf</code> the key to how your extension will be added to Firefox, and how it will work. Our <code>chrome.manifest</code> file looks like this:</p>
+<pre class="code"><code>content     linktargetfinder    chrome/content/
+content     linktargetfinder    chrome/content/ contentaccessible=yes
+overlay chrome://browser/content/browser.xul chrome://linktargetfinder/content/browser.xul
+
+locale	linktargetfinder	en-US	locale/en-US/
+
+skin	linktargetfinder	classic/1.0	skin/
+style	chrome://global/content/customizeToolbar.xul	chrome://linktargetfinder/skin/skin.css</code></pre>
+<p>So, what are all those options? Let’s go through them:</p>
+<dl>
+<dt><code>content linktargetfinder chrome/content/</code></dt>
+<dd>The path to where your extension content files will be found.</dd>
+<dt><code>content linktargetfinder chrome/content/ contentaccessible=yes</code></dt>
+<dd>Same as the above, but when <code>contentaccessible=yes</code> is 
+added, it allows Firefox 3 and later to access the extension’s files and
+ show them in the web browser (like within a web page). Found this 
+excellent help through <a href="http://adblockplus.org/blog/web-pages-accessing-chrome-is-forbidden">Web pages accessing chrome:// is forbidden</a>.</dd>
+<dt><code>overlay chrome://browser/content/browser.xul chrome://linktargetfinder/content/browser.xul</code></dt>
+<dd>The path to which file you will use to override web browser elements, and add items to the toolbar, menu and statusbar.</dd>
+<dt><code>locale linktargetfinder en-US locale/en-US/</code></dt>
+<dd>Used for localization of content.</dd>
+<dt><code>skin linktargetfinder classic/1.0 skin/</code></dt>
+<dd>Skin reference.</dd>
+<dt><code>style chrome://global/content/customizeToolbar.xul chrome://linktargetfinder/skin/skin.css</code></dt>
+<dd>Style overlays for chrome pages.</dd>
+</dl>
+<p>More information can be found in <a href="https://developer.mozilla.org/en/Chrome_Manifest">Chrome Manifest</a>.</p>
+<h3><span class="lowercase">c</span>hrome folder</h3>
+<p>Ok, once the mandatory parts are out of the way, now things start to 
+get interesting. This is also when we start to look at XUL, which stands
+ for <acronym title="eXtensible Markup Language">XML</acronym> User Interface Language. It is developed by Mozilla to create interfaces in Firefox, Thunderbird etc.</p>
+<p>First, within the <code>chrome/content</code> folder, create three files:</p>
+<ul>
+<li><code>browser.xul</code></li>
+<li><code>options.xul</code></li>
+<li><code>linkTargetFinder.js</code></li>
+</ul>
+<h4><code><span class="lowercase">b</span>rowser.xul</code></h4>
+<p>This is the file we will use to override some of the default look of 
+the web browser, i.e. add a button to the toolbar, an item to the Tools 
+menu and a statusbar icon. Let’s look at the complete browser.xul file 
+and then break it down:</p>
+<pre class="code"><code>&lt;?xml version="1.0"?&gt;
+&lt;?xml-stylesheet href="chrome://linktargetfinder/skin/skin.css" type="text/css"?&gt;
+&lt;!DOCTYPE linktargetfinder SYSTEM "chrome://linktargetfinder/locale/translations.dtd"&gt;
+&lt;overlay id="sample" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"&gt;
+
+		&lt;script src="linkTargetFinder.js" /&gt;
+
+		&lt;menupopup id="menu_ToolsPopup"&gt;
+			&lt;menuitem label="&amp;runlinktargetfinder;" key="link-target-finder-run-key" oncommand="linkTargetFinder.run()"/&gt;
+		&lt;/menupopup&gt;
+
+		&lt;keyset&gt;
+
+			&lt;key id="link-target-finder-run-key" modifiers="accel alt shift" key="L" oncommand="linkTargetFinder.run()"/&gt;
+		&lt;/keyset&gt;
+
+		&lt;statusbar id="status-bar"&gt;
+			&lt;statusbarpanel id="link-target-finder-status-bar-icon" class="statusbarpanel-iconic" src="chrome://linktargetfinder/skin/status-bar.png" tooltiptext="&amp;runlinktargetfinder;" onclick="linkTargetFinder.run()" /&gt;
+		&lt;/statusbar&gt;
+
+		&lt;toolbarpalette id="BrowserToolbarPalette"&gt;
+			&lt;toolbarbutton id="link-target-finder-toolbar-button" label="Link Target Finder" tooltiptext="&amp;runlinktargetfinder;" oncommand="linkTargetFinder.run()"/&gt;
+		&lt;/toolbarpalette&gt;
+&lt;/overlay&gt;</code></pre>
+<p>First, there some general <acronym title="eXtensible Markup Language">XML</acronym> syntax, then you include your <acronym title="Cascading Style Sheets">CSS</acronym> code and set a DOCTYPE for localization. It’s followed by the <code>overlay</code> root element with its Ghostbuster-inspired namespace (developers are truly geeks <img class="wp-smiley" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/icon_smile.gif" alt=":-)"> ).</p>
+<p>After that you’re free to write whatever XUL you want, and basically it’s like <acronym title="HyperText Markup Language">HTML</acronym> should’ve been. What I mean with that is that it is filled with basic interface options that can’t be found anywhere in <acronym title="HyperText Markup Language">HTML</acronym>. For a complete overview of what you can do, please read the <a href="https://developer.mozilla.org/en/XUL_Reference">XUL Reference</a>.</p>
+<p>In our code here, we start with adding a menu option to the Tools menu in Firefox, and connect it to a keyboard shortcut:</p>
+<pre class="code"><code>&lt;menupopup id="menu_ToolsPopup"&gt;
+
+	&lt;menuitem label="&amp;runlinktargetfinder;" key="link-target-finder-run-key" oncommand="linkTargetFinder.run()"/&gt;
+&lt;/menupopup&gt;
+
+&lt;keyset&gt;
+	&lt;key id="link-target-finder-run-key" modifiers="accel alt shift" key="L" oncommand="linkTargetFinder.run()"/&gt;
+&lt;/keyset&gt;</code></pre>
+<p>Followed by adding an icon to the Firefox statusbar:</p>
+<pre class="code"><code>&lt;statusbar id="status-bar"&gt;
+
+	&lt;statusbarpanel id="link-target-finder-status-bar-icon" class="statusbarpanel-iconic" src="chrome://linktargetfinder/skin/status-bar.png" tooltiptext="&amp;runlinktargetfinder;" onclick="linkTargetFinder.run()" /&gt;
+&lt;/statusbar&gt;</code></pre>
+<p>And at the end, we add a button to the Firefox toolbar:</p>
+<pre class="code"><code>&lt;toolbarpalette id="BrowserToolbarPalette"&gt;
+	&lt;toolbarbutton id="link-target-finder-toolbar-button" label="Link Target Finder" tooltiptext="&amp;runlinktargetfinder;" oncommand="linkTargetFinder.run()"/&gt;
+&lt;/toolbarpalette&gt;</code></pre>
+<p>Note that you need to go to View &gt; Toolbars &gt; Customize… to add your button to the visible toolbar.</p>
+<p>In the above examples, you might have noticed the <code>&amp;runlinktargetfinder;</code> code. That is used for localizing text, and its translation can be found in the <code>locale</code> folder. More on that later.</p>
+<p>Another thing to notice, which can be tricky at first, is that some 
+ids and classes for XUL elements actually have meaning for its display, 
+stemming from core Firefox code. Make sure to read the <a href="https://developer.mozilla.org/en/XUL_Reference">XUL Reference</a> thoroughly for the elements you’re using.</p>
+<p>If you want to use regular <acronym title="HyperText Markup Language">HTML</acronym> elements instead of/together with XUL, you can include the <acronym title="eXtensible HyperText Markup Language - HTML reformulated as XML">XHTML</acronym> definition in your root element, and then include any <acronym title="HyperText Markup Language">HTML</acronym> element with the <code>html:</code> prefix. Like this:</p>
+<pre class="code"><code>&lt;overlay id="sample" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:<acronym title="HyperText Markup Language">HTML</acronym>="http://www.w3.org/1999/xhtml"&gt;
+
+&lt;html:input type="submit" value="Send" /&gt;
+</code></pre>
+<h4><code><span class="lowercase">o</span>ptions.xul</code></h4>
+<p>This file is used for the options/preferences dialog for your extension, and its path is pointed out in the <code>install.rdf</code> file in the <code>Description/em:optionsURL</code> node. The complete options file for our extension looks like this:</p>
+<pre class="code"><code>&lt;?xml version="1.0"?&gt;
+&lt;?xml-stylesheet href="chrome://global/skin/" type="text/css"?&gt;
+
+&lt;prefwindow
+     title="Link Target Finder Preferences"
+     xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"&gt;
+
+	&lt;prefpane label="Link Target Finder Preferences"&gt;
+		&lt;preferences&gt;
+			&lt;preference id="link-target-finder-autorun" name="extensions.linktargetfinder.autorun" type="bool"/&gt;
+
+		&lt;/preferences&gt;
+
+		&lt;groupbox&gt;
+			&lt;caption label="Settings"/&gt;
+			&lt;grid&gt;
+				&lt;columns&gt;
+					&lt;column flex="4"/&gt;
+
+					&lt;column flex="1"/&gt;
+				&lt;/columns&gt;
+				&lt;rows&gt;
+					&lt;row&gt;
+						&lt;label control="autorun" value="Autorun"/&gt;
+						&lt;checkbox id="autorun" preference="link-target-finder-autorun"/&gt;
+
+					&lt;/row&gt;
+				&lt;/rows&gt;
+			&lt;/grid&gt;
+		&lt;/groupbox&gt;	
+
+	&lt;/prefpane&gt;
+
+&lt;/prefwindow&gt;</code></pre>
+<p>Again, some regular <acronym title="eXtensible Markup Language">XML</acronym>
+ information and styling of the content. It then uses some XUL to layout
+ the content of the preferences dialog. The interesting part here, 
+though, is connecting the user input to the actual settings for the 
+extension (those settings are to be found in the <code>prefs.js</code> file, mentioned in detail below).</p>
+<p>To start with, you create a <code>preferences</code> group in the <code>options.xul</code>
+ file with your desired preferences. Then, give each preference an id 
+and connect it to the extension’s real preferences with the <code>name</code> attribute:</p>
+<pre class="code"><code>&lt;preferences&gt;
+	&lt;preference id="link-target-finder-autorun" name="extensions.linktargetfinder.autorun" type="bool"/&gt;
+&lt;/preferences&gt;</code></pre>
+<p>Then you create an element and add a <code>preference</code> attribute to it, pointing to the before-chosen <code>id</code>attribute for the preference in the <code>preferences</code> group. It will then automatically connect its value to that specific preference.</p>
+<pre class="code"><code>&lt;checkbox id="autorun" preference="link-target-finder-autorun"/&gt;</code></pre>
+<p>Note that you don’t need to add an OK button for the dialog – for 
+instance, on Macs there won’t be one while it’s automatically added for 
+Windows users. All about system compatibility, my friends.</p>
+<h4><code><span class="lowercase">l</span>inkTargetFinder.js</code></h4>
+<p>If you’re like me, this is where you will feel at home. Good ol’ JavaScript code. <img class="wp-smiley" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/icon_smile.gif" alt=":-)"></p>
+<p>What’s nice here is that you can script any element in the XUL <em>and</em> any element in the <acronym title="HyperText Markup Language">HTML</acronym> content window as well. All you need to access the content window is to precede your document call with the <code>content</code> keyword, like this:</p>
+<pre class="code"><code><strong>content</strong>.document.getElementsByTagName("a");</code></pre>
+<p>Here’s the complete code of the <code>linkTargetFinder.js</code> file:</p>
+<pre class="code"><code>var linkTargetFinder = function () {
+	var prefManager = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefBranch);
+	return {
+		init : function () {
+			gBrowser.addEventListener("load", function () {
+				var autoRun = prefManager.getBoolPref("extensions.linktargetfinder.autorun");
+				if (autoRun) {
+					linkTargetFinder.run();
+				}
+			}, false);
+		},
+
+		run : function () {
+			var head = content.document.getElementsByTagName("head")[0],
+				style = content.document.getElementById("link-target-finder-style"),
+				allLinks = content.document.getElementsByTagName("a"),
+				foundLinks = 0;
+
+			if (!style) {
+				style = content.document.createElement("link");
+				style.id = "link-target-finder-style";
+				style.type = "text/css";
+				style.rel = "stylesheet";
+				style.href = "chrome://linktargetfinder/skin/skin.css";
+				head.appendChild(style);
+			}	
+
+			for (var i=0, il=allLinks.length; i&lt;il; i++) {
+				elm = allLinks[i];
+				if (elm.getAttribute("target")) {
+					elm.className += ((elm.className.length &gt; 0)? " " : "") + "link-target-finder-selected";
+					foundLinks++;
+				}
+			}
+			if (foundLinks === 0) {
+				alert("No links found with a target attribute");
+			}
+			else {
+				alert("Found " + foundLinks + " links with a target attribute");
+			}
+		}
+	};
+}();
+window.addEventListener("load", linkTargetFinder.init, false);</code></pre>
+<p>While it’s a fair bit of code, it is also very basic. When the window loads, it runs the <code>init</code> method of the <code>linkTargetFinder</code> object. If the preference <code>autorun</code> is set to true, it calls its <code>run</code>
+ method immediately. Otherwise, it will only be called when the toolbar 
+button, menu item or statusbar icon is clicked. This happens through the
+ <code>oncommand</code> attribute on the elements in the <code>browser.xul</code> file.</p>
+<p>The code in the <code>run</code> method is pretty straight-forward. It adds a <acronym title="Cascading Style Sheets">CSS</acronym>
+ file from the extensions chrome folder to the current document, finds 
+all links in it, loops through them and checks if they have a <code>target</code> attribute, counts those, highlights them and alerts you with the number of hits.</p>
+<p>As you can see, there’s a pointer in the code to something called <code>gBrowser</code>. That is how to get a reference to the current web browser, and you could also use <code>getBrowser()</code>
+ as well. Note that this sort of code is only available from within the 
+XUL context of the web browser. More information and options can be 
+found in <a href="https://developer.mozilla.org/en/Code_snippets/Tabbed_browser">Tabbed Browser.</a></p>
+<p>The only unusual part for a JavaScript is the variable <code>prefManager</code>, which connects to Firefox preference manager, and later gets the <code>autorun</code> preference with the help of this code:</p>
+<pre class="code"><code>var autoRun = prefManager.getBoolPref("extensions.linktargetfinder.autorun");</code></pre>
+<p>The three types of extension preferences are string, integer and boolean, and the six methods to work with them are:</p>
+<ul>
+<li><code>getBoolPref()</code></li>
+<li><code>setBoolPref()</code></li>
+<li><code>getCharPref()</code></li>
+<li><code>setCharPref()</code></li>
+<li><code>getIntPref()</code></li>
+<li><code>setIntPref()</code></li>
+</ul>
+<h3><span class="lowercase">d</span>efaults folder</h3>
+<p>Within the <code>defaults</code> folder, you create a <code>preferences</code> folder and in that one a file named <code>pref.js</code>. This is used for the preferences you want to use for your extension, and looks like this:</p>
+<pre class="code"><code>pref("extensions.linktargetfinder.autorun", false);</code></pre>
+<h3><span class="lowercase">l</span>ocale folder</h3>
+<p>Used for localization. In our case here, we just have one child folder for <code>en-US</code> content, but it can be easily extended. That folder has a file named <code>translations.dtd</code>, which contains translations for entities used in XUL files. Our file looks like this:</p>
+<pre class="code"><code>&lt;!ENTITY runlinktargetfinder "Run Link Target Finder"&gt;</code></pre>
+<p>Remember <code>&amp;runlinktargetfinder;</code> in the <code>browser.xul</code> file? This is where it gets its translation.</p>
+<h3><span class="lowercase">s</span>kin folder</h3>
+<p>Now when we have all functionality in place, let’s make things a little more pretty (just a little, ok?). In our <code>skin</code> folder, we have three files: <code>skin.css</code>, <code>status-bar.png</code> and <code>toolbar-large.png</code>. The images are, naturally, used for the toolbar and statusbar respectively.</p>
+<p>The <acronym title="Cascading Style Sheets">CSS</acronym> in <code>skin.css</code>
+ is used for setting the image for the toolbar, the size and space for 
+the statusbar icon and the highlight look of links with a <code>target</code> attribute. The code looks like this:</p>
+<pre class="code"><code>#link-target-finder-toolbar-button {
+	list-style-image: <acronym title="Uniform Resource Locator">URL</acronym>("chrome://linktargetfinder/skin/toolbar-large.png");
+}
+
+#link-target-finder-status-bar-icon {
+	width: 83px;
+	margin: 0 5px;
+}
+
+.link-target-finder-selected {
+	outline: 2px solid red !important;
+}</code></pre>
+<h2>Packaging and installing</h2>
+<p>Firefox extensions are delivered like XPI files, and those are 
+basically just ZIP files with another extension. Therefore, when you’re 
+finished with your extension, all you need to do is ZIP your files 
+together and give it an XPI extension. Note: do <em>not</em> ZIP the containing folder for your extension, just its contents (<code>chrome</code> folder, <code>chrome.manifest</code> and <code>install.rdf</code> files etc).</p>
+<p>Once you have your XPI file, you can just drag and drop it into Firefox, and it will automatically install.</p>
+<h3>Packaging with Windows</h3>
+<p>Select all the contents of your extension folder, right-click and choose <code>Send To &gt; Compressed (Zipped) Folder</code>. Rename it to <code>.xpi</code> instead of <code>.zip</code> and you’re done!</p>
+<h3>Packaging with Mac</h3>
+<p>Open the Terminal, navigate to your extension with the <code><span class="lowercase"><acronym title="Compact Disk">CD</acronym></span></code> command and then type in <code>zip -r LinkTargetFinder.xpi *</code>. Ta daa!</p>
+<h3>Packaging with Linux</h3>
+<p>Open a terminal, get to your extension folder, and type in <code>zip -r LinkTargetFinder.xpi *</code> All done!</p>
+<h2>Distribution of your extension</h2>
+<p>There are two options of distributing your extension. Either use <a href="http://addons.mozilla.org/">addons.mozilla.org</a> or host it yourself. If you do it yourself, you can specify an <code>updateURL</code> in your <code>install.rdf</code> file, but note that since Firefox 3 it has to be a secure location, e.g. through <acronym title="Secure Sockets Layer (a security protocol)">SSL</acronym> or similar.</p>
+<p>Personally, I’d recommend addons.mozilla.org for greater reach, 
+auto-update pushing and statistics. The downside of it, though, is that 
+the review process can take quite some time for your extension to get an
+ approval. Before that it can still be downloaded as an experimental 
+add-on, but people need to have an addons.mozilla account and log in to 
+do so.</p>
+<p>To make sure it doesn’t take longer than necessary, I recommend reading <a href="http://blog.mozilla.org/addons/2009/01/14/successfully-getting-your-addon-reviewed/"><br>
+Successfully Getting your Addon Reviewed</a>.</p>
+<h2>Downloads</h2>
+<p>All the code I’ve created here is available both as a ZIP file of 
+everything, so you can start experimenting, change stuff and see what 
+happens. It is also available as an XPI file, which you can install in 
+your Firefox just to test the functionality (drag and drop it into 
+Firefox).</p>
+<ul>
+<li><a href="http://www.robertnyman.com/extensions/LinkTargetFinder.zip">Download Link Target Finder code as a ZIP file</a>.</li>
+<li><a href="http://www.robertnyman.com/extensions/LinkTargetFinder.xpi">Download Link Target Finder as an XPI file</a>.</li>
+</ul>
+<h2>Happy extension developing!</h2>
+<p>I hope this has been a good, albeit long, introduction to Firefox 
+extension development and that it has helped you to grasp concepts you 
+hadn’t gotten full control over yet. Good luck, and don’t hesitate to 
+ask if you have any questions!</p>
+      </div><!-- .entry-content -->
+
+  <footer class="entry-meta">
+            <p class="meta"><b>Tags:</b> <a href="https://blog.mozilla.org/addons/tag/documentation/" rel="tag">documentation</a>, <a href="https://blog.mozilla.org/addons/tag/tutorials/" rel="tag">tutorials</a></p>
+          <p class="meta"><b>Categories:</b> <a href="https://blog.mozilla.org/addons/category/developers/" rel="category tag">developers</a>, <a href="https://blog.mozilla.org/addons/category/documentation/" rel="category tag">documentation</a></p>
+    </footer><!-- .entry-meta -->
+</article><!-- #post -->
+
+      
+
+<section id="comments">
+
+  <header class="comments-head">
+    <h2>47 responses</h2>
+      </header>
+
+  <ol id="comment-list" class="hfeed av">
+  
+ <li id="comment-1986" class="comment even thread-even depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://frontendbook.com/" class="url" rel="nofollow external" title="http://frontendbook.com">
+         <cite class="author fn">Mattias Hising</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/ce748ecb085c45fd26c74b700a7f9412.jpg" srcset="https://secure.gravatar.com/avatar/ce748ecb085c45fd26c74b700a7f9412?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-1986" rel="bookmark" title="Permanent link to this comment by Mattias Hising">
+        <time class="published" datetime="2009-01-28" title="2009-01-28">
+                January 28, 2009 at 4:11 pm</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>There were a lot of discussions about developing your 
+extensions a couple of years ago, and somewhere the know-how and 
+tutorials have gone missing the last couple of years (or at least the 
+good ones), this post is really, really good and will probably help a 
+lot of people in the community start building extensions. Keep up the 
+good work Robert.</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-1987" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://www.kaply.com/weblog/" class="url" rel="nofollow external" title="http://www.kaply.com/weblog/">
+         <cite class="author fn">Michael Kaply</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/2246e9f43ad4b30102f289071ae91e2e.jpg" srcset="https://secure.gravatar.com/avatar/2246e9f43ad4b30102f289071ae91e2e?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-1987" rel="bookmark" title="Permanent link to this comment by Michael Kaply">
+        <time class="published" datetime="2009-01-28" title="2009-01-28">
+                January 28, 2009 at 4:25 pm</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>locale and skin are chrome</p>
+<p>They should be under the chrome directory.</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-1990" class="comment byuser comment-author-sbindernagelmozillacom even thread-even depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://blog.mozilla.org/seth/" class="url" rel="nofollow external" title="http://blog.mozilla.org/seth/">
+         <cite class="author fn">seth bindernagel</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/67aef6cf940020af359266fa393ff69b.jpg" srcset="https://secure.gravatar.com/avatar/67aef6cf940020af359266fa393ff69b?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-1990" rel="bookmark" title="Permanent link to this comment by seth bindernagel">
+        <time class="published" datetime="2009-01-28" title="2009-01-28">
+                January 28, 2009 at 8:26 pm</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Hey Rey,  Nice post.  I wrote this a long time ago:</p>
+<p><a href="http://blog.mozilla.org/seth/2008/04/07/the-story-of-a-non-hacker-who-wrote-a-firefox-add-on/" rel="nofollow">http://blog.mozilla.org/seth/2008/04/07/the-story-of-a-non-hacker-who-wrote-a-firefox-add-on/</a></p>
+<p>Hope it provides some good stuff to add to your post.</p>
+<p>Also, I know guys like Ted M (irc nick luser) developed some pretty 
+handy tools to get started.  I think you can find that stuff here:</p>
+<p><a href="https://addons.mozilla.org/en-US/firefox/addon/7434" rel="nofollow">https://addons.mozilla.org/en-US/firefox/addon/7434</a></p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-1997" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://blog.mozbox.org/" class="url" rel="nofollow external" title="http://blog.mozbox.org">
+         <cite class="author fn">Paul</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/a046f67399acec21282d784ac66cb009.jpg" srcset="https://secure.gravatar.com/avatar/a046f67399acec21282d784ac66cb009?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-1997" rel="bookmark" title="Permanent link to this comment by Paul">
+        <time class="published" datetime="2009-01-29" title="2009-01-29">
+                January 29, 2009 at 11:04 am</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Wow ! Nice post <img src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;"></p>
+<p>I suggest you to push it on MDC.</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-2005" class="comment even thread-even depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://www.robertnyman.com/" class="url" rel="nofollow external" title="http://www.robertnyman.com">
+         <cite class="author fn">Robert Nyman</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/00809b14f856d33156329188a5b6ecdc.jpg" srcset="https://secure.gravatar.com/avatar/00809b14f856d33156329188a5b6ecdc?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-2005" rel="bookmark" title="Permanent link to this comment by Robert Nyman">
+        <time class="published" datetime="2009-01-30" title="2009-01-30">
+                January 30, 2009 at 3:32 am</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Thanks everyone, glad that you like it!</p>
+<p>Michael,</p>
+<p>That’s a good point, the chrome directory is probably more suitable (just not mandatory).</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-2006" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://www.robertnyman.com/" class="url" rel="nofollow external" title="http://www.robertnyman.com">
+         <cite class="author fn">Robert Nyman</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/00809b14f856d33156329188a5b6ecdc.jpg" srcset="https://secure.gravatar.com/avatar/00809b14f856d33156329188a5b6ecdc?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-2006" rel="bookmark" title="Permanent link to this comment by Robert Nyman">
+        <time class="published" datetime="2009-01-30" title="2009-01-30">
+                January 30, 2009 at 3:39 am</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Paul,</p>
+<p>I’d love to have it on the MDC. Rey, what do you think? <img src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/simple-smile.png" alt=":-)" class="wp-smiley" style="height: 1em; max-height: 1em;"></p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-2014" class="comment even thread-even depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://ozten.com/" class="url" rel="nofollow external" title="http://ozten.com">
+         <cite class="author fn">Austin King</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/c6866b2462157d0a5e534262d8cf6d82.png" srcset="https://secure.gravatar.com/avatar/c6866b2462157d0a5e534262d8cf6d82?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-2014" rel="bookmark" title="Permanent link to this comment by Austin King">
+        <time class="published" datetime="2009-01-30" title="2009-01-30">
+                January 30, 2009 at 11:49 am</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Another really handy resource by Ted is<br>
+<a href="http://ted.mielczarek.org/code/mozilla/extensionwiz/" rel="nofollow">http://ted.mielczarek.org/code/mozilla/extensionwiz/</a><br>
+Which will generate all of these files for you into a basic extension that you can edit and run with.</p>
+<p>I just found the FUEL library<br>
+<a href="https://developer.mozilla.org/en/FUEL" rel="nofollow">https://developer.mozilla.org/en/FUEL</a><br>
+If you are targeting Firefox 3, it’s worth a look. It provides web development abstractions on top of XUL.</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-2041" class="comment byuser comment-author-rbangomozillacom bypostauthor odd alt thread-odd thread-alt depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">rbango</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/d210d815ca80c3f23f540f82541389e1_003.jpg" srcset="https://secure.gravatar.com/avatar/d210d815ca80c3f23f540f82541389e1?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-2041" rel="bookmark" title="Permanent link to this comment by rbango">
+        <time class="published" datetime="2009-02-02" title="2009-02-02">
+                February 2, 2009 at 7:40 am</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>@Robert: I’ll run it by the team and see what we can do.</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-2049" class="comment even thread-even depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://antennasoft.net/robcee" class="url" rel="nofollow external" title="http://antennasoft.net/robcee">
+         <cite class="author fn">robcee</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/34f8f3442a6be7ae2cb26459a2e33fc1.jpg" srcset="https://secure.gravatar.com/avatar/34f8f3442a6be7ae2cb26459a2e33fc1?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-2049" rel="bookmark" title="Permanent link to this comment by robcee">
+        <time class="published" datetime="2009-02-03" title="2009-02-03">
+                February 3, 2009 at 9:15 am</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>seconding Paul. This should definitely be on MDC. Great tutorial, Robert. Thanks for reposting this, Rey!</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-2079" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">Anji</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/490e8f34d16490201004f40191614c31.jpg" srcset="https://secure.gravatar.com/avatar/490e8f34d16490201004f40191614c31?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-2079" rel="bookmark" title="Permanent link to this comment by Anji">
+        <time class="published" datetime="2009-02-05" title="2009-02-05">
+                February 5, 2009 at 2:47 am</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Thanks a ton Robert Nyman<br>
+ Very useful post</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-2104" class="comment even thread-even depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://www.story16.com/" class="url" rel="nofollow external" title="http://www.story16.com">
+         <cite class="author fn">Aditi Mittal</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/c7cdcd2b024349c5173b960690aa2c34.jpg" srcset="https://secure.gravatar.com/avatar/c7cdcd2b024349c5173b960690aa2c34?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-2104" rel="bookmark" title="Permanent link to this comment by Aditi Mittal">
+        <time class="published" datetime="2009-02-06" title="2009-02-06">
+                February 6, 2009 at 4:03 am</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Very nice and informative article<br>
+thanx</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-2194" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://www.robertnyman.com/" class="url" rel="nofollow external" title="http://www.robertnyman.com/">
+         <cite class="author fn">Robert Nyman</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/00809b14f856d33156329188a5b6ecdc.jpg" srcset="https://secure.gravatar.com/avatar/00809b14f856d33156329188a5b6ecdc?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-2194" rel="bookmark" title="Permanent link to this comment by Robert Nyman">
+        <time class="published" datetime="2009-02-09" title="2009-02-09">
+                February 9, 2009 at 3:42 pm</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>robcee, Anji, Aditi,</p>
+<p>Thank you very much!</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-2368" class="comment even thread-even depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">Lubes</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/0c6ce6ed049f90543e8439e4e1b65492.jpg" srcset="https://secure.gravatar.com/avatar/0c6ce6ed049f90543e8439e4e1b65492?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-2368" rel="bookmark" title="Permanent link to this comment by Lubes">
+        <time class="published" datetime="2009-02-26" title="2009-02-26">
+                February 26, 2009 at 10:24 am</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Profile manager on Linux:</p>
+<p>1.quit firefox<br>
+2.open terminal<br>
+3.write command: firefox -ProfileManager</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-2558" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">Jason Thompson</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/5473e998712fb6d0b57cc0a9d20ea87e.png" srcset="https://secure.gravatar.com/avatar/5473e998712fb6d0b57cc0a9d20ea87e?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-2558" rel="bookmark" title="Permanent link to this comment by Jason Thompson">
+        <time class="published" datetime="2009-03-10" title="2009-03-10">
+                March 10, 2009 at 10:27 am</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Is there a video on how to do this info overload <img src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/frownie.png" alt=":(" class="wp-smiley" style="height: 1em; max-height: 1em;"></p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-2569" class="comment even thread-even depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">Sandeep</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/f86132bae9d3cfb006e8470f8ce91719.jpg" srcset="https://secure.gravatar.com/avatar/f86132bae9d3cfb006e8470f8ce91719?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-2569" rel="bookmark" title="Permanent link to this comment by Sandeep">
+        <time class="published" datetime="2009-03-11" title="2009-03-11">
+                March 11, 2009 at 2:41 am</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>hi,<br>
+i want to submit a firefox search plugin . pl can you let me know how i can do it.</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-2653" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">Mike Camino</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/5bf47c00793b5e3c68766b9b3de6ec2a.jpg" srcset="https://secure.gravatar.com/avatar/5bf47c00793b5e3c68766b9b3de6ec2a?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-2653" rel="bookmark" title="Permanent link to this comment by Mike Camino">
+        <time class="published" datetime="2009-03-15" title="2009-03-15">
+                March 15, 2009 at 5:41 am</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Great tutorial, many thanks to you, Robert!</p>
+<p>But you said nothing about how to run and debug add-on until it packed and installed.<br>
+I’m very new to mozilla development and it is unclear for me.</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-2756" class="comment even thread-even depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">Lee</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/6ba088a5f1c3914b511738d6861e180f.jpg" srcset="https://secure.gravatar.com/avatar/6ba088a5f1c3914b511738d6861e180f?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-2756" rel="bookmark" title="Permanent link to this comment by Lee">
+        <time class="published" datetime="2009-03-22" title="2009-03-22">
+                March 22, 2009 at 2:45 am</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Is there a website where we can request add-ons, like a wish list to add to?</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-4045" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">John Doe</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/c0520ac0052e07892eb07330c3f6d03a.jpg" srcset="https://secure.gravatar.com/avatar/c0520ac0052e07892eb07330c3f6d03a?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-4045" rel="bookmark" title="Permanent link to this comment by John Doe">
+        <time class="published" datetime="2009-05-21" title="2009-05-21">
+                May 21, 2009 at 2:08 pm</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Whoa! Thank you! You’ve saved my day! This is hands down the best article ever when it comes to add-on development. Thanks!</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-5334" class="comment even thread-even depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">lj saminathan</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/5768f0a9edfdcb6c432ec682d8b010ea.jpg" srcset="https://secure.gravatar.com/avatar/5768f0a9edfdcb6c432ec682d8b010ea?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-5334" rel="bookmark" title="Permanent link to this comment by lj saminathan">
+        <time class="published" datetime="2009-07-08" title="2009-07-08">
+                July 8, 2009 at 1:58 am</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Hai,<br>
+Really nice topic . thank you very much . i can understand my project’s  extension very well with your example</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-6006" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://www.s-light.eu/" class="url" rel="nofollow external" title="http://www.s-light.eu">
+         <cite class="author fn">Stefan Krüger</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/817834e80fc812376fb11b770e3c18d5.jpg" srcset="https://secure.gravatar.com/avatar/817834e80fc812376fb11b770e3c18d5?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-6006" rel="bookmark" title="Permanent link to this comment by Stefan Krüger">
+        <time class="published" datetime="2009-07-17" title="2009-07-17">
+                July 17, 2009 at 1:20 am</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Hey Guys,</p>
+<p>thanks for the posting and writing off this tutorila.<br>
+it was the first helpfull i found^^</p>
+<p>meanwhile i have found <a href="https://developer.mozilla.org/en/Building_an_Extension#Test" rel="nofollow">https://developer.mozilla.org/en/Building_an_Extension#Test</a></p>
+<p>ther is a realy nice info for beginners:<br>
+[quote]…<br>
+If you get a message that the install.rdf is malformed, it is helpful to
+ load it into firefox using the File-&gt;Open File command and it will 
+report xml errors to you. In my case, I had a space before the 
+“&lt;?xml"…<br>
+[/quote]</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-8187" class="comment even thread-even depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">Naveen Mandadi</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/3920519d19c61da0ac354aae8787e255.jpg" srcset="https://secure.gravatar.com/avatar/3920519d19c61da0ac354aae8787e255?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-8187" rel="bookmark" title="Permanent link to this comment by Naveen Mandadi">
+        <time class="published" datetime="2009-08-16" title="2009-08-16">
+                August 16, 2009 at 6:05 am</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Very good explanation in understanding of developing an add-on 
+in firefox. This will be a very good startup for me. I faced a problem 
+while installing the add-on as per the content of the files in your 
+explanation. xmlns and xmlns:em values in install.rdf should have RDF in
+ smaller case. This was correct in your download xpi file.</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-8188" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">Naveen Mandadi</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/3920519d19c61da0ac354aae8787e255.jpg" srcset="https://secure.gravatar.com/avatar/3920519d19c61da0ac354aae8787e255?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-8188" rel="bookmark" title="Permanent link to this comment by Naveen Mandadi">
+        <time class="published" datetime="2009-08-16" title="2009-08-16">
+                August 16, 2009 at 6:08 am</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>How do i know what makes this add-on incompatible to version 3.5.2?</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-8190" class="comment even thread-even depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">Naveen Mandadi</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/3920519d19c61da0ac354aae8787e255.jpg" srcset="https://secure.gravatar.com/avatar/3920519d19c61da0ac354aae8787e255?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-8190" rel="bookmark" title="Permanent link to this comment by Naveen Mandadi">
+        <time class="published" datetime="2009-08-16" title="2009-08-16">
+                August 16, 2009 at 6:16 am</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Got yah. Incompatibility is because of the maxVersion in the install.rdf</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-9706" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">Mike Berthram</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/648ff687b46b86e6e5176876e98e801c.jpg" srcset="https://secure.gravatar.com/avatar/648ff687b46b86e6e5176876e98e801c?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-9706" rel="bookmark" title="Permanent link to this comment by Mike Berthram">
+        <time class="published" datetime="2009-09-06" title="2009-09-06">
+                September 6, 2009 at 4:43 am</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Hi, I’m always getting “Empty string in getElementById()” warnings when i open the options window. How can I solve this?</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-9708" class="comment even thread-even depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">Mike Berthram</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/648ff687b46b86e6e5176876e98e801c.jpg" srcset="https://secure.gravatar.com/avatar/648ff687b46b86e6e5176876e98e801c?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-9708" rel="bookmark" title="Permanent link to this comment by Mike Berthram">
+        <time class="published" datetime="2009-09-06" title="2009-09-06">
+                September 6, 2009 at 5:09 am</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Nvm, i got it. You just have to set an the id attribute for the prefwindow in the options.xul</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-10066" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">pd</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/a46432280a758be967e32d01abcfe313.jpg" srcset="https://secure.gravatar.com/avatar/a46432280a758be967e32d01abcfe313?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-10066" rel="bookmark" title="Permanent link to this comment by pd">
+        <time class="published" datetime="2009-09-13" title="2009-09-13">
+                September 13, 2009 at 6:35 am</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>wordpress’ ridiculous narrow design really sucks for articles like this. How about a widescreen version please?</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-10337" class="comment even thread-even depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://www.trguzelsozler.com/" class="url" rel="nofollow external" title="http://www.trguzelsozler.com">
+         <cite class="author fn">güzel sözler</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/2d36478d6c0139446a644be94c5879b8.jpg" srcset="https://secure.gravatar.com/avatar/2d36478d6c0139446a644be94c5879b8?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-10337" rel="bookmark" title="Permanent link to this comment by güzel sözler">
+        <time class="published" datetime="2009-09-18" title="2009-09-18">
+                September 18, 2009 at 2:52 pm</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Whoa! Thank you! You’ve saved my day! This is hands down the best article ever when it comes to add-on development. Thanks!</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-10712" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://www.kraloyun.us/" class="url" rel="nofollow external" title="http://www.kraloyun.us">
+         <cite class="author fn">kral oyunlar</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/cd5aa5363db8d6f170a8a0c6a589f661.jpg" srcset="https://secure.gravatar.com/avatar/cd5aa5363db8d6f170a8a0c6a589f661?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-10712" rel="bookmark" title="Permanent link to this comment by kral oyunlar">
+        <time class="published" datetime="2009-09-26" title="2009-09-26">
+                September 26, 2009 at 5:29 am</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Creating extensions for FF and if those are very useful for the users, will make you popular in this industry. </p>
+<p>I wish i could be able to develop even for myself. Thanks for explaining briefly how to develop.</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-10954" class="comment even thread-even depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://www.oyunlarda.com/" class="url" rel="nofollow external" title="http://www.oyunlarda.com">
+         <cite class="author fn">Oyunlar</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/4d7303449ed295a0b5537f38c7bc03c0.jpg" srcset="https://secure.gravatar.com/avatar/4d7303449ed295a0b5537f38c7bc03c0?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-10954" rel="bookmark" title="Permanent link to this comment by Oyunlar">
+        <time class="published" datetime="2009-10-02" title="2009-10-02">
+                October 2, 2009 at 2:16 pm</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Thanx mate! its a good article. but im getting the same problem
+ as  Mike Berthram. Empty string in getElementById()” warnings. can 
+somebody help?</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-11039" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://www.turkgencleri.net/" class="url" rel="nofollow external" title="http://www.turkgencleri.net">
+         <cite class="author fn">indir</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/0dd99fa09e9e5325f9b96b61b52f1adc.jpg" srcset="https://secure.gravatar.com/avatar/0dd99fa09e9e5325f9b96b61b52f1adc?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-11039" rel="bookmark" title="Permanent link to this comment by indir">
+        <time class="published" datetime="2009-10-04" title="2009-10-04">
+                October 4, 2009 at 3:11 pm</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Whoa! Thank you! You’ve saved my day! This is hands down the best article ever when it comes to add-on development. Thanks!</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-12646" class="comment even thread-even depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://www.diziizlek.com/" class="url" rel="nofollow external" title="http://www.diziizlek.com">
+         <cite class="author fn">Dizi izle</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/106fecda919c56c32d70292a3f67b3fd.jpg" srcset="https://secure.gravatar.com/avatar/106fecda919c56c32d70292a3f67b3fd?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-12646" rel="bookmark" title="Permanent link to this comment by Dizi izle">
+        <time class="published" datetime="2009-10-18" title="2009-10-18">
+                October 18, 2009 at 2:13 pm</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Thanx mate! its a good article. but im getting the same problem
+ as Mike Berthram. Empty string in getElementById()” warnings. can 
+somebody help?</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-13231" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://www.dizi-izle.gen.tr/" class="url" rel="nofollow external" title="http://www.dizi-izle.gen.tr">
+         <cite class="author fn">dizi izle</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/170ee95249c3dd8eac9fcee838646b43.jpg" srcset="https://secure.gravatar.com/avatar/170ee95249c3dd8eac9fcee838646b43?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-13231" rel="bookmark" title="Permanent link to this comment by dizi izle">
+        <time class="published" datetime="2009-10-25" title="2009-10-25">
+                October 25, 2009 at 8:05 pm</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Hi, i am always getting empty string in getElementById() warning when i open the options window, how can i solve this ??</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-13321" class="comment even thread-even depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://www.karadagpromosyon.com/" class="url" rel="nofollow external" title="http://www.karadagpromosyon.com">
+         <cite class="author fn">promosyon</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/3720209cb130984a4d399270a8c68776.jpg" srcset="https://secure.gravatar.com/avatar/3720209cb130984a4d399270a8c68776?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-13321" rel="bookmark" title="Permanent link to this comment by promosyon">
+        <time class="published" datetime="2009-10-28" title="2009-10-28">
+                October 28, 2009 at 3:42 am</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Whoa! Thank you! You’ve saved my day! This is hands down the best article ever when it comes to add-on development. Thanks!</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-14090" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">Andreas Eibach</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/221fedf1a0bde46523ff80ed2059f68a.jpg" srcset="https://secure.gravatar.com/avatar/221fedf1a0bde46523ff80ed2059f68a?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-14090" rel="bookmark" title="Permanent link to this comment by Andreas Eibach">
+        <time class="published" datetime="2009-11-09" title="2009-11-09">
+                November 9, 2009 at 5:01 am</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Thank you very much for your work!</p>
+<p>Very appreciated, and well-written, too. Keep it up.</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-14132" class="comment even thread-even depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://www.blogindir.blogcu.com/" class="url" rel="nofollow external" title="http://www.blogindir.blogcu.com">
+         <cite class="author fn">blogindir</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/668bbb3ca32e0a953f7a2baf95c5618a.jpg" srcset="https://secure.gravatar.com/avatar/668bbb3ca32e0a953f7a2baf95c5618a?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-14132" rel="bookmark" title="Permanent link to this comment by blogindir">
+        <time class="published" datetime="2009-11-10" title="2009-11-10">
+                November 10, 2009 at 1:51 am</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>You’ve saved my day! This is hands down the best article ever when it comes to add-on development. Thanks!</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-14267" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">Andreas Eibach</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/221fedf1a0bde46523ff80ed2059f68a.jpg" srcset="https://secure.gravatar.com/avatar/221fedf1a0bde46523ff80ed2059f68a?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-14267" rel="bookmark" title="Permanent link to this comment by Andreas Eibach">
+        <time class="published" datetime="2009-11-10" title="2009-11-10">
+                November 10, 2009 at 2:56 pm</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>To user N. Mandadi from Aug 16, 09:<br>
+I agree that there might be some beta testers too who use this so it 
+would not hurt using future version number 3.8 in the downloadable 
+package (I’m testing the 3.7 alphas, so I had to “fix” this too)</p>
+<p>To user pd from Sep 13, 09:</p>
+<p>I can’t agree more. It’s really a nightmare to scroll back and forth thru the code samples.</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-20766" class="comment even thread-even depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://www.muzikdinlex.com/" class="url" rel="nofollow external" title="http://www.muzikdinlex.com">
+         <cite class="author fn">müzik dinle</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/ba0078c95afc9b499b51d0278335461f.jpg" srcset="https://secure.gravatar.com/avatar/ba0078c95afc9b499b51d0278335461f?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-20766" rel="bookmark" title="Permanent link to this comment by müzik dinle">
+        <time class="published" datetime="2009-11-27" title="2009-11-27">
+                November 27, 2009 at 1:50 pm</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Nvm, i got it. You just have to set an the id attribute for the prefwindow in the options.xul</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-26585" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">rafael</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/8c8294e73d259c0e97c33d908bd0b571.jpg" srcset="https://secure.gravatar.com/avatar/8c8294e73d259c0e97c33d908bd0b571?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-26585" rel="bookmark" title="Permanent link to this comment by rafael">
+        <time class="published" datetime="2009-12-15" title="2009-12-15">
+                December 15, 2009 at 4:49 am</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Awesome Tutorial!</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-29427" class="comment even thread-even depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">Gopinath</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/59f2a5a93b0d6dd72fe52a2f8d8f55fb.jpg" srcset="https://secure.gravatar.com/avatar/59f2a5a93b0d6dd72fe52a2f8d8f55fb?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-29427" rel="bookmark" title="Permanent link to this comment by Gopinath">
+        <time class="published" datetime="2009-12-22" title="2009-12-22">
+                December 22, 2009 at 11:58 pm</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Hi, I worked it out. It is excellent. It isn’t working with Firefox 3.5. What should i do to make it.. Thanks in advance</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-29979" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://personalinterest./" class="url" rel="nofollow external" title="http://PersonalInterest.">
+         <cite class="author fn">Shreyas Agasthya</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/9d3fdf233d7d479962c33a048ddced06.jpg" srcset="https://secure.gravatar.com/avatar/9d3fdf233d7d479962c33a048ddced06?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-29979" rel="bookmark" title="Permanent link to this comment by Shreyas Agasthya">
+        <time class="published" datetime="2009-12-24" title="2009-12-24">
+                December 24, 2009 at 4:26 am</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Undoubtedly, this is one of the best articles I came across 
+while I was looking at my whys, hows, and whats for my plugin 
+development. I have read the complete article and had hands-on as well. 
+Having done that, I still could not get three questions answered.</p>
+<p>1. Syntax and meaning of chrome.manifest.<br>
+2. What does it mean to write chrome://browser/…?<br>
+3. Why do we leave /chrome/content when we reference any file underneath this?</p>
+<p>Can somebody help me here, please?</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-33859" class="comment even thread-even depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">GeoNOregon</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/60afbec68fe2ae0749aaab1128b95d94.jpg" srcset="https://secure.gravatar.com/avatar/60afbec68fe2ae0749aaab1128b95d94?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-33859" rel="bookmark" title="Permanent link to this comment by GeoNOregon">
+        <time class="published" datetime="2010-01-03" title="2010-01-03">
+                January 3, 2010 at 4:41 pm</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Very good article. I have no intention nor desire to develop 
+add-ons, and I still acquired a great understanding of what makes 
+Firefox, Firefox.</p>
+<p>Why did I read it?  I am trying to find out where add-on’s that have a
+ data file, such as form entry add-on’s, etc, store the data file. I 
+have been searching for the answer for a day or two, this time around, 
+(I’ve given up on several previous occasions.)</p>
+<p>If this was common knowledge, backing up and migrating/upgrading would be a much simpler process.</p>
+<p>Why is it the simplest information about computers and software is often the most difficult to find?</p>
+<p>Later,</p>
+<p>GeoD</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-34449" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">Shreyas Agasthya</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/9d3fdf233d7d479962c33a048ddced06.jpg" srcset="https://secure.gravatar.com/avatar/9d3fdf233d7d479962c33a048ddced06?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-34449" rel="bookmark" title="Permanent link to this comment by Shreyas Agasthya">
+        <time class="published" datetime="2010-01-05" title="2010-01-05">
+                January 5, 2010 at 10:45 am</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Hello,</p>
+<p>Can someone help me with the above questions?</p>
+<p>Regards,<br>
+Shreyas</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-41155" class="comment even thread-even depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">Sandy</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/da8d064a113d3e09fe250e22c064d84f.jpg" srcset="https://secure.gravatar.com/avatar/da8d064a113d3e09fe250e22c064d84f?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-41155" rel="bookmark" title="Permanent link to this comment by Sandy">
+        <time class="published" datetime="2010-01-23" title="2010-01-23">
+                January 23, 2010 at 9:11 pm</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>hey thanx a lot. this was very useful for my final year project <img src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/simple-smile.png" alt=":)" class="wp-smiley" style="height: 1em; max-height: 1em;"></p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-41172" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">Sandy</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/da8d064a113d3e09fe250e22c064d84f.jpg" srcset="https://secure.gravatar.com/avatar/da8d064a113d3e09fe250e22c064d84f?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-41172" rel="bookmark" title="Permanent link to this comment by Sandy">
+        <time class="published" datetime="2010-01-23" title="2010-01-23">
+                January 23, 2010 at 10:37 pm</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>hello everyone,<br>
+I am trying to develop an add-on to firefox for speech recognition which
+ will enable the user to perform a search through an existing search 
+engine.<br>
+ so as mentioned in the article i will develop the extension using XUL and java script.<br>
+but what about the speech recognition part..for example lets take 
+feature extraction..how do i implement those? should i implement those 
+using another language and have a pointer to that in java script???</p>
+<p>Please some one pay attention to this issue. its for my final year project</p>
+<p>Regards,<br>
+Sandy</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-41873" class="comment even thread-even depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://www.krinsurance.com/" class="url" rel="nofollow external" title="http://www.krinsurance.com">
+         <cite class="author fn">Firstman</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/48a09e41c59ec0c34248f76ceadb5423.jpg" srcset="https://secure.gravatar.com/avatar/48a09e41c59ec0c34248f76ceadb5423?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-41873" rel="bookmark" title="Permanent link to this comment by Firstman">
+        <time class="published" datetime="2010-01-26" title="2010-01-26">
+                January 26, 2010 at 7:45 am</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>I’m looking for this answer too. Thank you for Q&amp;A</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-41957" class="comment odd alt thread-odd thread-alt depth-1 hentry">
+           <h3 class="entry-title vcard">
+       <a href="http://www.lehsys.com/" class="url" rel="nofollow external" title="http://www.lehsys.com">
+         <cite class="author fn">lehenryjr</cite>
+         <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/ee0ed9c8bff1401ddd2f6bcd41966798.png" srcset="https://secure.gravatar.com/avatar/ee0ed9c8bff1401ddd2f6bcd41966798?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>       </a>
+       <span class="comment-meta">
+              wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-41957" rel="bookmark" title="Permanent link to this comment by lehenryjr">
+        <time class="published" datetime="2010-01-26" title="2010-01-26">
+                January 26, 2010 at 1:44 pm</time></a>:</span>
+     </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>This is a very good article. I’ve never written a plug-in for Firefox, but I want to and this gave me a good start. Thanks.<br>
+I appreciate it… </p>
+<p>————-<br>
+Later,<br>
+LEHenryJr.</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+
+ <li id="comment-42098" class="comment even thread-even depth-1 hentry">
+            <h3 class="entry-title vcard">
+        <cite class="author fn">Anup</cite>
+        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/58b174c755293d4e14dd80b1d282ad94.jpg" srcset="https://secure.gravatar.com/avatar/58b174c755293d4e14dd80b1d282ad94?s=96&amp;r=g 2x" class="avatar avatar-48 photo" height="48" width="48"></span>        <span class="comment-meta">wrote on        <a href="https://blog.mozilla.org/addons/2009/01/28/how-to-develop-a-firefox-extension/comment-page-1/#comment-42098" rel="bookmark" title="Permanent link to this comment by Anup">
+        <time class="published" datetime="2010-01-27" title="2010-01-27">
+                January 27, 2010 at 2:22 am</time></a>:</span>
+      </h3>
+      
+    
+    <blockquote class="entry-content">
+      <p>Really good. Lots of informative stuffs</p>
+    </blockquote>
+
+      <p class="comment-util"> </p>
+  </li><!-- #comment-## -->
+  </ol>
+
+  
+
+
+
+</section>
+
+    
+  </div><!-- #content-main -->
+
+<div id="content-sub" class="sub sidebar widgets" role="complementary">
+
+
+      <aside class="widget vcard author-bio">
+      <h3 class="widget-title">
+      About              <a class="url fn author" href="https://blog.mozilla.org/addons/author/rbangomozillacom/">rbango        <span class="photo"><img alt="" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/d210d815ca80c3f23f540f82541389e1.jpg" srcset="https://secure.gravatar.com/avatar/d210d815ca80c3f23f540f82541389e1?s=136&amp;r=g 2x" class="avatar avatar-68 photo" height="68" width="68"></span>        </a>
+                  </h3>
+
+            <p>Mozilla's Add-on Community Lead</p>
+      
+            <p><a class="url go" href="https://blog.mozilla.org/addons/author/rbangomozillacom/">More from Rey</a></p>
+          </aside>
+  
+  <aside id="text-456878582" class="widget widget_text"><h3 class="widget-title">Looking for Add-ons?</h3>			<div class="textwidget"><p><strong><a href="https://addons.mozilla.org/">Visit the gallery</a></strong></p></div>
+		</aside><aside id="categories-254997392" class="widget widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+	<li class="cat-item cat-item-7117"><a href="https://blog.mozilla.org/addons/category/builder/">builder</a>
+</li>
+	<li class="cat-item cat-item-388"><a href="https://blog.mozilla.org/addons/category/compatibility/" title="Information about add-on compatibility">compatibility</a>
+</li>
+	<li class="cat-item cat-item-6744"><a href="https://blog.mozilla.org/addons/category/competition/">contests</a>
+</li>
+	<li class="cat-item cat-item-44"><a href="https://blog.mozilla.org/addons/category/developers/" title="Topics of interest to add-on developers">developers</a>
+</li>
+	<li class="cat-item cat-item-295"><a href="https://blog.mozilla.org/addons/category/documentation/" title="Documentation and tutorials for add-on developers">documentation</a>
+</li>
+	<li class="cat-item cat-item-581"><a href="https://blog.mozilla.org/addons/category/end-users/" title="Information of important to end users/consumers of add-ons">end users</a>
+</li>
+	<li class="cat-item cat-item-39"><a href="https://blog.mozilla.org/addons/category/events/" title="Information about upcoming add-on events">events</a>
+</li>
+	<li class="cat-item cat-item-278884"><a href="https://blog.mozilla.org/addons/category/featured-addons/">featured addons</a>
+</li>
+	<li class="cat-item cat-item-121"><a href="https://blog.mozilla.org/addons/category/general/" title="General/uncategorized posts">general</a>
+</li>
+	<li class="cat-item cat-item-588"><a href="https://blog.mozilla.org/addons/category/jetpack/">jetpack</a>
+</li>
+	<li class="cat-item cat-item-124"><a href="https://blog.mozilla.org/addons/category/mobile/">mobile</a>
+</li>
+	<li class="cat-item cat-item-574"><a href="https://blog.mozilla.org/addons/category/policy/" title="New policies and discussion of draft policies for add-ons">policy</a>
+</li>
+	<li class="cat-item cat-item-227"><a href="https://blog.mozilla.org/addons/category/releases/" title="Information on releases of addons.mozilla.org">releases</a>
+</li>
+	<li class="cat-item cat-item-7119"><a href="https://blog.mozilla.org/addons/category/restartless/">restartless</a>
+</li>
+	<li class="cat-item cat-item-742"><a href="https://blog.mozilla.org/addons/category/sdk/">sdk</a>
+</li>
+	<li class="cat-item cat-item-551"><a href="https://blog.mozilla.org/addons/category/personas/">themes</a>
+</li>
+		</ul>
+</aside>
+</div><!-- #content-sub -->
+
+  </main><!-- #content -->
+</div></div><!-- /.wrap /#page -->
+
+<footer id="site-info">
+  <div class="wrap">
+    <p id="foot-logo">
+      <a class="top" href="#page">Return to top</a>
+      <a class="logo" href="https://www.mozilla.org/" rel="external">Mozilla</a>
+    </p>
+
+    <p id="colophon">
+      Except where otherwise <a href="https://www.mozilla.org/about/legal.html" rel="external">noted</a>, content on this site is licensed under the <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="external license">Creative Commons Attribution Share-Alike License v3.0</a> or any later version.    </p>
+
+    <nav id="nav-meta">
+      <ul>
+        <li><a href="https://www.mozilla.org/contact/" rel="external">Contact Us</a></li>
+        <li><a href="https://www.mozilla.org/privacy/" rel="external">Privacy Policy</a></li>
+        <li><a href="https://www.mozilla.org/about/" rel="external">Legal Notices</a></li>
+        <li><a href="https://www.mozilla.org/legal/fraud-report/" rel="external">Report Trademark Abuse</a></li>
+        <li><a href="https://github.com/mozilla/One-Mozilla-blog/" rel="external">Theme Code </a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+<script src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/tabzilla.js"></script>
+
+<script type="text/javascript" src="How%20to%20develop%20a%20Firefox%20extension%20%7C%20Mozilla%20Add-ons%20Blog_files/comment-reply.js"></script>
+
+
+
+</body></html>
